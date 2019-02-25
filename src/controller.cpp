@@ -26,3 +26,4 @@ std::string Controller::initial_window_title() const
     return view_.initial_window_title();
 }
 
+// Simple code change
