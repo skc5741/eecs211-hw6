@@ -13,6 +13,7 @@ View::View(Model const& model)
 void View::draw(Sprite_set& set)
 {
     // TODO, PROBABLY
+    Model(8,8);
 }
 
 Dimensions View::initial_window_dimensions() const
