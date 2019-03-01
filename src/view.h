@@ -22,5 +22,6 @@ private:
     Model const& model_;
 
     // TODO: Add any private members you need, such as sprites
+
 };
 

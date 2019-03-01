@@ -10,6 +10,7 @@ Model::Model(int width, int height)
         : board_({width, height})
 {
     // TODO: initialize `next_moves_` to `turn_`'s available moves
+    compute_next_moves_();
 }
 
 Rectangle Model::board() const
@@ -43,6 +44,7 @@ void Model::play_move(Position pos)
 
     // TODO: actually execute the move, advance the turn, refill
     // `next_moves_`, etc.
+    really_play_move_(*movep);
 }
 
 //
@@ -52,34 +54,74 @@ void Model::play_move(Position pos)
 Position_set Model::find_flips_(Position current, Dimensions dir) const
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
-    return {};
+    Position_set flips;
+    size_t index = 1;
+    current = current + (index*dir);
+    for(;;) {
+        if(!board_.good_position(current) || board_[current] == Player::neither)
+            return {};
+        else if(board_[current] == other_player(turn_)) {
+            flips[current] = true;
+            index++;
+            current = current + (index * dir);
+        }
+        else if(board_[current] == turn_)
+            return flips;
+    }
 }
 
 Position_set Model::evaluate_position_(Position pos) const
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
-    return {};
+    Position_set flips;
+    for(Dimensions dir : Board::all_directions()) {
+        flips |= find_flips_(pos, dir);
+    }
+    return flips;
 }
 
 void Model::compute_next_moves_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
+    next_moves_.clear();
+    for(Position pos : board_.all_positions()) {
+        Position_set pset = evaluate_position_(pos);
+        if(!pset.empty()) {
+            next_moves_[pos] = pset;
+        }
+    }
 }
 
 bool Model::advance_turn_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
-    return false;
+    turn_ = other_player(turn_);
+    compute_next_moves_();
+    return !next_moves_.empty();
 }
 
 void Model::set_game_over_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
+    turn_ = Player::neither;
+    int num_spaces = board_.all_positions().width * board_.all_positions().height;
+    if(board_.count_player(Player::dark) > ((double)num_spaces)/2) {
+        winner_ = Player::dark;
+    }
+    else if(board_.count_player(Player::light) > ((double)num_spaces)/2) {
+        winner_ = Player::light;
+    }
+    else {
+        winner_ = Player::neither;
+    }
 }
 
 void Model::really_play_move_(Move move)
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
+    board_[move.first] = turn_;
+    board_[move.second] = turn_;
+    advance_turn_();
 }
 
 
