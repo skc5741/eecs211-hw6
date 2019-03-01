@@ -33,6 +33,16 @@ protected:
     //  - on_mouse_move for mouse tracking, or
     //  - on_frame for animation (?).
 
+    void on_mouse_up(ge211::Mouse_button button, ge211::Position position)
+    {
+        // check if valid, perform swap
+    }
+
+    void on_mouse_move(ge211::Mouse_button button, ge211::Position position)
+    {
+        mouse_posn = position;
+    }
+
     // These three delegate to the view:
     void draw(ge211::Sprite_set&) override;
     ge211::Dimensions initial_window_dimensions() const override;
@@ -45,4 +55,6 @@ private:
     // TODO: Add any UI state you need, e.g.:
     //  - the position of the mouse, or
     //  - the position of a keyboard-controller cursor.
+
+    ge211::Position  mouse_posn;
 };

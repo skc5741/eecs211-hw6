@@ -10,6 +10,8 @@ Model::Model(int width, int height)
         : board_({width, height})
 {
     // TODO: initialize `next_moves_` to `turn_`'s available moves
+    compute_next_moves_();
+    // need to write compute_next_moves_
 }
 
 Rectangle Model::board() const
