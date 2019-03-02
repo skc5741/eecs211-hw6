@@ -41,6 +41,9 @@ protected:
     void on_mouse_move(ge211::Mouse_button button, ge211::Position position)
     {
         mouse_posn = position;
+        if(button == ge211::Mouse_button::left) {
+            model_.play_move(position);
+        }
     }
 
     // These three delegate to the view:

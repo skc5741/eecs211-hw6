@@ -9,11 +9,12 @@ Controller::Controller(int size)
 Controller::Controller(int width, int height)
         : model_(width, height)
         , view_(model_)
+        , mouse_posn(0,0)
 { }
 
 void Controller::draw(Sprite_set& sprites)
 {
-    view_.draw(sprites);
+    view_.draw(sprites, mouse_posn);
 }
 
 Dimensions Controller::initial_window_dimensions() const

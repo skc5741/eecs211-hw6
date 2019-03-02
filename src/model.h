@@ -18,6 +18,7 @@
 // Represents the state of the Reversi game.
 class Model
 {
+
 public:
     /// ***************************************************
     /// *** DON'T CHANGE ANYTHING IN THE PUBLIC SECTION ***
