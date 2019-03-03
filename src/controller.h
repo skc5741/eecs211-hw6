@@ -33,18 +33,9 @@ protected:
     //  - on_mouse_move for mouse tracking, or
     //  - on_frame for animation (?).
 
-    void on_mouse_up(ge211::Mouse_button button, ge211::Position position)
-    {
-        // check if valid, perform swap
-    }
+    void on_mouse_up(ge211::Mouse_button, ge211::Position) override;
 
-    void on_mouse_move(ge211::Mouse_button button, ge211::Position position)
-    {
-        mouse_posn = position;
-        if(button == ge211::Mouse_button::left) {
-            model_.play_move(position);
-        }
-    }
+    void on_mouse_move(ge211::Position position) override;
 
     // These three delegate to the view:
     void draw(ge211::Sprite_set&) override;

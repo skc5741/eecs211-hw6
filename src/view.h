@@ -28,16 +28,16 @@ public:
 private:
     Model const& model_;
 
-    int space_dim = 20;
-    int piece_rad = 8;
-    int spacing = 2;
+    int space_dim = 32;
+    int piece_rad = 12;
+    int spacing = 3;
 
     // TODO: Add any private members you need, such as sprites
     ge211::Rectangle_sprite    const    // Dimensions, color
             space_sprite_    {{ space_dim, space_dim }, space_color};
     ge211::Circle_sprite    const       // Radius, color
-            white_sprite_    { piece_rad,  white_color};
+            light_sprite_    { piece_rad,  white_color};
     ge211::Circle_sprite    const       // Radius, color
-            black_sprite_    { piece_rad,  black_color};
+            dark_sprite_    { piece_rad,  black_color};
 };
 
