@@ -6,10 +6,10 @@
 
 #include <string>
 
-ge211::Color const space_color    {0, 245, 0};
-ge211::Color const white_color  {245, 245, 245};
-ge211::Color const black_color   {10, 10, 10};
-ge211::Color const star_color    {245, 0, 0};
+ge211::Color const space_color    {0, 235, 0};
+ge211::Color const white_color  {235, 235, 235};
+ge211::Color const black_color   {20, 20, 20};
+ge211::Color const star_color    {235, 0, 0};
 
 class View
 {
@@ -39,5 +39,8 @@ private:
             light_sprite_    { piece_rad,  white_color};
     ge211::Circle_sprite    const       // Radius, color
             dark_sprite_    { piece_rad,  black_color};
+    ge211::Rectangle_sprite  const
+            background_sprite {{ model_.board().dimensions().width * (space_dim + spacing) + spacing
+                                , model_.board().dimensions().height * (space_dim + spacing) + spacing }, {135, 135, 135}};
 };
 
