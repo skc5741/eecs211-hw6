@@ -84,12 +84,30 @@ void Model::compute_next_moves_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
     next_moves_.clear();
-    for(Position pos : board_.all_positions()) {
-        Position_set pset = evaluate_position_(pos);
-        if(!pset.empty()) {
-            next_moves_[pos] = pset;
+    Rectangle avail_positions;
+    if (turn_count < 4) {
+        avail_positions = Rectangle::from_top_left({3, 3}, {5, 5});
+        int i = 0;
+        for(Position pos : avail_positions) {
+            Position_set pset;
+            if (board_[pos] == Player::neither) {
+                pset |= pos; // add pos to pset
+            }
+                next_moves_[pos] = pset;
+            }
         }
     }
+    else {
+        avail_positions = board_.all_positions();
+        for(Position pos : avail_positions) {
+            Position_set pset = evaluate_position_(pos);
+            if(!pset.empty()) {
+                next_moves_[pos] = pset;
+            }
+        }
+    }
+
+
 }
 
 bool Model::advance_turn_()

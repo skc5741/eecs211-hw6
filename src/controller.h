@@ -33,7 +33,7 @@ protected:
     //  - on_mouse_move for mouse tracking, or
     //  - on_frame for animation (?).
 
-    void on_mouse_up(ge211::Mouse_button, ge211::Position) override;
+    void on_mouse_down(ge211::Mouse_button, ge211::Position) override;
 
     void on_mouse_move(ge211::Position position) override;
 
