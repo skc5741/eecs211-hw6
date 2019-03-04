@@ -9,7 +9,7 @@ Controller::Controller(int size)
 Controller::Controller(int width, int height)
         : model_(width, height)
         , view_(model_)
-        , mouse_posn(model_.board().width,model_.board().height)
+        , mouse_posn(-100,-100)
 { }
 
 void Controller::draw(Sprite_set& sprites)
@@ -20,8 +20,11 @@ void Controller::draw(Sprite_set& sprites)
 void Controller::on_mouse_down(ge211::Mouse_button, ge211::Position position)
 {
     // check if valid, perform swap
-    if(model_[position] == Player::neither)
-    model_.play_move(position);
+    ge211::Position grid_pos = view_.pos_to_grid(position);
+    std::cout << grid_pos.x << std::endl;
+    std::cout << grid_pos.y << std::endl;
+    if(model_[grid_pos] == Player::neither) {}
+        model_.play_move(position);
 }
 
 void Controller::on_mouse_move(ge211::Position position)

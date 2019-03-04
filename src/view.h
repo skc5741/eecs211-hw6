@@ -9,7 +9,7 @@
 ge211::Color const space_color    {0, 235, 0};
 ge211::Color const white_color  {235, 235, 235};
 ge211::Color const black_color   {20, 20, 20};
-ge211::Color const star_color    {235, 0, 0};
+ge211::Color const red_color    {235, 0, 0};
 
 class View
 {
@@ -25,22 +25,29 @@ public:
 
     std::string initial_window_title() const;
 
+    ge211::Position pos_to_grid(ge211::Position) const;
+
 private:
     Model const& model_;
 
     int space_dim = 32;
     int piece_rad = 12;
+    int marker_rad = 6;
     int spacing = 3;
 
     // TODO: Add any private members you need, such as sprites
     ge211::Rectangle_sprite    const    // Dimensions, color
             space_sprite_    {{ space_dim, space_dim }, space_color};
+    ge211::Rectangle_sprite    const    // Dimensions, color
+            red_sprite_    {{ space_dim, space_dim }, red_color};
     ge211::Circle_sprite    const       // Radius, color
             light_sprite_    { piece_rad,  white_color};
     ge211::Circle_sprite    const       // Radius, color
             dark_sprite_    { piece_rad,  black_color};
-    ge211::Rectangle_sprite  const
-            background_sprite {{ model_.board().dimensions().width * (space_dim + spacing) + spacing
-                                , model_.board().dimensions().height * (space_dim + spacing) + spacing }, {135, 135, 135}};
+    ge211::Circle_sprite    const       // Radius, color
+            marker_sprite_    { marker_rad,  red_color};
+    ge211::Rectangle_sprite  const      // Dimensions, color
+            background_sprite {{ model_.board().dimensions().width * (space_dim + spacing) + spacing,
+                                 model_.board().dimensions().height * (space_dim + spacing) + spacing }, {135, 135, 135}};
 };
 
