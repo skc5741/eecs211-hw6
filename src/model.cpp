@@ -86,7 +86,7 @@ void Model::compute_next_moves_()
     next_moves_.clear();
     Rectangle avail_positions;
     if (turn_count < 4) {
-        avail_positions = Rectangle::from_top_left({3, 3}, {5, 5});
+        avail_positions = Rectangle::from_top_left({3, 3}, {2, 2});
         int i = 0;
         for(Position pos : avail_positions) {
             Position_set pset;
