@@ -10,6 +10,7 @@ ge211::Color const space_color    {0, 235, 0};
 ge211::Color const white_color  {235, 235, 235};
 ge211::Color const black_color   {20, 20, 20};
 ge211::Color const red_color    {235, 0, 0};
+ge211::Color const gray_color    {135, 135, 135};
 
 class View
 {
@@ -27,6 +28,8 @@ public:
 
     ge211::Position pos_to_grid(ge211::Position) const;
 
+    ge211::Position grid_to_pos(ge211::Position) const;
+
 private:
     Model const& model_;
 
@@ -40,6 +43,8 @@ private:
             space_sprite_    {{ space_dim, space_dim }, space_color};
     ge211::Rectangle_sprite    const    // Dimensions, color
             red_sprite_    {{ space_dim, space_dim }, red_color};
+    ge211::Rectangle_sprite    const    // Dimensions, color
+            gray_sprite_    {{ space_dim, space_dim }, gray_color};
     ge211::Circle_sprite    const       // Radius, color
             light_sprite_    { piece_rad,  white_color};
     ge211::Circle_sprite    const       // Radius, color
@@ -48,6 +53,6 @@ private:
             marker_sprite_    { marker_rad,  red_color};
     ge211::Rectangle_sprite  const      // Dimensions, color
             background_sprite {{ model_.board().dimensions().width * (space_dim + spacing) + spacing,
-                                 model_.board().dimensions().height * (space_dim + spacing) + spacing }, {135, 135, 135}};
+                                 model_.board().dimensions().height * (space_dim + spacing) + spacing }, gray_color};
 };
 

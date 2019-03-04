@@ -28,40 +28,34 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
 
     // Red Square (hovering)
     ge211::Position grid_pos = pos_to_grid(mouse_pos);
-    ge211::Rectangle rec;
-    rec.x = grid_pos.x * (space_dim + spacing) + spacing;
-    rec.y = grid_pos.y * (space_dim + spacing) + spacing;
-    set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+    if(model_.find_move(grid_pos))
+        set.add_sprite(red_sprite_, grid_to_pos(grid_pos), 2);
 
     for(int x = 0; x < model_.board().width; x++) {
         for(int y = 0; y < model_.board().height; y++) {
 
             // Initialize board spaces
-            ge211::Rectangle rec;
-            rec.x = x * (space_dim + spacing) + spacing;
-            rec.y = y * (space_dim + spacing) + spacing;
-
-            set.add_sprite(space_sprite_, {rec.x, rec.y}, 1);
+            set.add_sprite(space_sprite_, grid_to_pos({x,y}), 1);
 
             // Initialize board pieces
             if(model_[{x, y}] != Player::neither) {
-                ge211::Rectangle rec;
-                rec.x = x * (space_dim + spacing) + spacing + (space_dim/2 - piece_rad);
-                rec.y = y * (space_dim + spacing) + spacing + (space_dim/2 - piece_rad);
+                ge211::Position pos = grid_to_pos({x,y});
+                pos.x += (space_dim/2 - piece_rad);
+                pos.y += (space_dim/2 - piece_rad);
 
                 if (model_[{x, y}] == Player::light)
-                    set.add_sprite(light_sprite_, {rec.x, rec.y}, 3);
+                    set.add_sprite(light_sprite_, pos, 3);
                 else if (model_[{x, y}] == Player::dark)
-                    set.add_sprite(dark_sprite_, {rec.x, rec.y}, 3);
+                    set.add_sprite(dark_sprite_, pos, 3);
             }
 
             // Initialze move markers
             if (model_.find_move({x,y})) {
-                ge211::Rectangle rec;
-                rec.x = x * (space_dim + spacing) + spacing + (space_dim/2 - marker_rad);
-                rec.y = y * (space_dim + spacing) + spacing + (space_dim/2 - marker_rad);
+                ge211::Position pos = grid_to_pos({x,y});
+                pos.x += (space_dim/2 - marker_rad);
+                pos.y += (space_dim/2 - marker_rad);
 
-                set.add_sprite(marker_sprite_, {rec.x, rec.y}, 4);
+                set.add_sprite(marker_sprite_, pos, 4);
             }
 
             // Red Squares (flippable)
@@ -69,9 +63,14 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
                 Move move = *model_.find_move(grid_pos);
                 if (move.second[{x, y}]) {
                     ge211::Rectangle rec;
-                    rec.x = x * (space_dim + spacing) + spacing;
-                    rec.y = y * (space_dim + spacing) + spacing;
-                    set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+                    set.add_sprite(red_sprite_, grid_to_pos({x,y}), 2);
+                }
+            }
+
+            // If game is over, do something cool
+            if(model_.is_game_over()) {
+                if(model_[{x,y}] == model_.winner()) {
+                    set.add_sprite(gray_sprite_, grid_to_pos(grid_pos));
                 }
             }
         }
@@ -81,8 +80,6 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
 Dimensions View::initial_window_dimensions() const
 {
     // You can change this if you want:
-    //return grid_size * model_.board().dimensions();
-
     return { model_.board().dimensions().width * (space_dim + spacing) + spacing,
              model_.board().dimensions().height * (space_dim + spacing) + spacing };
 }
@@ -96,5 +93,11 @@ std::string View::initial_window_title() const
 ge211::Position View::pos_to_grid(ge211::Position pos) const {
     return { (pos.x - spacing) / (space_dim + spacing),
              (pos.y - spacing) / (space_dim + spacing)};
+}
+
+ge211::Position View::grid_to_pos(ge211::Position grid_pos) const {
+    ge211::Position pos = { grid_pos.x * (space_dim + spacing) + spacing,
+                            grid_pos.y * (space_dim + spacing) + spacing };
+    return pos;
 }
 
