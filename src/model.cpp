@@ -139,6 +139,7 @@ void Model::really_play_move_(Move move)
     board_[move.first] = turn_;
     board_[move.second] = turn_;
     advance_turn_();
+    turn_count++;
 }
 
 
