@@ -91,10 +91,9 @@ void Model::compute_next_moves_()
         for(Position pos : avail_positions) {
             Position_set pset;
             if (board_[pos] == Player::neither) {
-                pset |= pos; // add pos to pset
+                pset[pos] = true;
             }
-                next_moves_[pos] = pset;
-            }
+            next_moves_[pos] = pset;
         }
     }
     else {
