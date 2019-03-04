@@ -21,7 +21,6 @@ void Controller::on_mouse_down(ge211::Mouse_button, ge211::Position position)
 {
     // check if valid, perform swap
     ge211::Position grid_pos = view_.pos_to_grid(position);
-    std::cout << grid_pos.x << ", " << grid_pos.y << std::endl;
     if(model_[grid_pos] == Player::neither) {}
         model_.play_move(grid_pos);
 }

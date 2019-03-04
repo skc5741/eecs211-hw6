@@ -56,7 +56,7 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
     if (model_.turn() == Player::light)
         set.add_sprite(light_sprite_, mouse_pos, 4);
     else if (model_.turn() == Player::dark)
-        set.add_sprite(light_sprite_, mouse_pos, 4);
+        set.add_sprite(dark_sprite_, mouse_pos, 4);
 }
 
 Dimensions View::initial_window_dimensions() const
