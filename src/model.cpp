@@ -39,13 +39,12 @@ void Model::play_move(Position pos)
         throw Client_logic_error("Model::play_move: game over");
 
     Move const* movep = find_move(pos);
-    if (!movep) {}
-        //throw Client_logic_error("Model::play_move: no such move");
+    if (!movep)
+        throw Client_logic_error("Model::play_move: no such move");
 
     // TODO: actually execute the move, advance the turn, refill
     // `next_moves_`, etc.
-    else
-        really_play_move_(*movep);
+    really_play_move_(*movep);
 }
 
 //

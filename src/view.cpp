@@ -34,9 +34,9 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
                 rec.y = y * (space_dim + spacing) + spacing + (space_dim/2 - piece_rad);
 
                 if (model_[{x, y}] == Player::light)
-                    set.add_sprite(light_sprite_, {rec.x, rec.y}, 2);
+                    set.add_sprite(light_sprite_, {rec.x, rec.y}, 3);
                 else if (model_[{x, y}] == Player::dark)
-                    set.add_sprite(dark_sprite_, {rec.x, rec.y}, 2);
+                    set.add_sprite(dark_sprite_, {rec.x, rec.y}, 3);
             }
 
             // Initialze move markers
@@ -45,18 +45,37 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
                 rec.x = x * (space_dim + spacing) + spacing + (space_dim/2 - marker_rad);
                 rec.y = y * (space_dim + spacing) + spacing + (space_dim/2 - marker_rad);
 
-                set.add_sprite(marker_sprite_, {rec.x, rec.y}, 3);
+                set.add_sprite(marker_sprite_, {rec.x, rec.y}, 4);
             }
         }
     }
 
     // Initialize mouse piece
-    mouse_pos = mouse_pos.left_by(piece_rad);
-    mouse_pos = mouse_pos.up_by(piece_rad);
+    ge211:Position circle_center = mouse_pos;
+    circle_center = circle_center.left_by(piece_rad);
+    circle_center = circle_center.up_by(piece_rad);
     if (model_.turn() == Player::light)
-        set.add_sprite(light_sprite_, mouse_pos, 4);
+        set.add_sprite(light_sprite_, circle_center, 5);
     else if (model_.turn() == Player::dark)
-        set.add_sprite(dark_sprite_, mouse_pos, 4);
+        set.add_sprite(dark_sprite_, circle_center, 5);
+
+    // Red Squares
+    ge211::Position grid_pos = pos_to_grid(mouse_pos);
+    ge211::Rectangle rec;
+    rec.x = grid_pos.x * (space_dim + spacing) + spacing;
+    rec.y = grid_pos.y * (space_dim + spacing) + spacing;
+    set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+
+    /*for(int x = 0; x < model_.board().width; x++) {
+        for (int y = 0; y < model_.board().height; y++) {
+            if(model_.find_move({grid_pos})->second[]) {
+                ge211::Rectangle rec;
+                rec.x = x * (space_dim + spacing) + spacing;
+                rec.y = y * (space_dim + spacing) + spacing;
+                set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+            }
+        }
+    } */
 }
 
 Dimensions View::initial_window_dimensions() const
