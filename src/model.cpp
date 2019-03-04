@@ -35,15 +35,16 @@ Move const* Model::find_move(Position pos) const
 
 void Model::play_move(Position pos)
 {
-    if (is_game_over())
-        throw Client_logic_error("Model::play_move: game over");
+    if (is_game_over()) {}
+        //throw Client_logic_error("Model::play_move: game over");
 
     Move const* movep = find_move(pos);
-    if (!movep)
-        throw Client_logic_error("Model::play_move: no such move");
+    if (!movep) {}
+        //throw Client_logic_error("Model::play_move: no such move");
 
     // TODO: actually execute the move, advance the turn, refill
     // `next_moves_`, etc.
+    else
     really_play_move_(*movep);
 }
 
@@ -144,9 +145,8 @@ void Model::really_play_move_(Move move)
     // TODO OR NOT TODO: OPTIONAL HELPER
     board_[move.first] = turn_;
     board_[move.second] = turn_;
-    if(!advance_turn_()) {
+    if(!advance_turn_())
         set_game_over_();
-    }
 }
 
 

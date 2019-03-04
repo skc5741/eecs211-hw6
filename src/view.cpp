@@ -69,8 +69,8 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
 
             // If game is over, do something cool
             if(model_.is_game_over()) {
-                if(model_[{x,y}] == model_.winner()) {
-                    set.add_sprite(gray_sprite_, grid_to_pos(grid_pos));
+                if(model_[{x,y}] != model_.winner()) {
+                    set.add_sprite(red_sprite_, grid_to_pos({x,y}), 2);
                 }
             }
         }
