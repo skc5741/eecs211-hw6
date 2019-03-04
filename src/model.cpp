@@ -35,16 +35,18 @@ Move const* Model::find_move(Position pos) const
 
 void Model::play_move(Position pos)
 {
+    std::cout << pos.x << ", " << pos.y << " passed into play_move" << std::endl;
     if (is_game_over())
         throw Client_logic_error("Model::play_move: game over");
 
     Move const* movep = find_move(pos);
-    if (!movep)
-        throw Client_logic_error("Model::play_move: no such move");
+    if (!movep) {}
+        //throw Client_logic_error("Model::play_move: no such move");
 
     // TODO: actually execute the move, advance the turn, refill
     // `next_moves_`, etc.
-    really_play_move_(*movep);
+    else
+        really_play_move_(*movep);
 }
 
 //
@@ -87,16 +89,15 @@ void Model::compute_next_moves_()
     Rectangle avail_positions;
     if (turn_count < 4) {
         avail_positions = Rectangle::from_top_left({3, 3}, {2, 2});
-        int i = 0;
         for(Position pos : avail_positions) {
             Position_set pset;
-            if (board_[pos] == Player::neither) {
-                pset[pos] = true;
+            if(board_[pos] == Player::neither) {
+                next_moves_[pos] = pset;
             }
-            next_moves_[pos] = pset;
         }
     }
     else {
+        stdcout << ""
         avail_positions = board_.all_positions();
         for(Position pos : avail_positions) {
             Position_set pset = evaluate_position_(pos);
@@ -113,6 +114,7 @@ bool Model::advance_turn_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
     turn_ = other_player(turn_);
+    turn_count++;
     compute_next_moves_();
     return !next_moves_.empty();
 }
@@ -139,7 +141,6 @@ void Model::really_play_move_(Move move)
     board_[move.first] = turn_;
     board_[move.second] = turn_;
     advance_turn_();
-    turn_count++;
 }
 
 
