@@ -17,6 +17,22 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
     // Initialize better background
     set.add_sprite(background_sprite, {0,0}, 0);
 
+    // Initialize mouse piece
+    ge211:Position circle_center = mouse_pos;
+    circle_center = circle_center.left_by(piece_rad);
+    circle_center = circle_center.up_by(piece_rad);
+    if (model_.turn() == Player::light)
+        set.add_sprite(light_sprite_, circle_center, 5);
+    else if (model_.turn() == Player::dark)
+        set.add_sprite(dark_sprite_, circle_center, 5);
+
+    // Red Square (hovering)
+    ge211::Position grid_pos = pos_to_grid(mouse_pos);
+    ge211::Rectangle rec;
+    rec.x = grid_pos.x * (space_dim + spacing) + spacing;
+    rec.y = grid_pos.y * (space_dim + spacing) + spacing;
+    set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+
     for(int x = 0; x < model_.board().width; x++) {
         for(int y = 0; y < model_.board().height; y++) {
 
@@ -47,35 +63,19 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
 
                 set.add_sprite(marker_sprite_, {rec.x, rec.y}, 4);
             }
-        }
-    }
 
-    // Initialize mouse piece
-    ge211:Position circle_center = mouse_pos;
-    circle_center = circle_center.left_by(piece_rad);
-    circle_center = circle_center.up_by(piece_rad);
-    if (model_.turn() == Player::light)
-        set.add_sprite(light_sprite_, circle_center, 5);
-    else if (model_.turn() == Player::dark)
-        set.add_sprite(dark_sprite_, circle_center, 5);
-
-    // Red Squares
-    ge211::Position grid_pos = pos_to_grid(mouse_pos);
-    ge211::Rectangle rec;
-    rec.x = grid_pos.x * (space_dim + spacing) + spacing;
-    rec.y = grid_pos.y * (space_dim + spacing) + spacing;
-    set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
-
-    /*for(int x = 0; x < model_.board().width; x++) {
-        for (int y = 0; y < model_.board().height; y++) {
-            if(model_.find_move({grid_pos})->second[]) {
-                ge211::Rectangle rec;
-                rec.x = x * (space_dim + spacing) + spacing;
-                rec.y = y * (space_dim + spacing) + spacing;
-                set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+            // Red Squares (flippable)
+            if(model_.find_move(grid_pos)) {
+                Move move = *model_.find_move(grid_pos);
+                if (move.second[{x, y}]) {
+                    ge211::Rectangle rec;
+                    rec.x = x * (space_dim + spacing) + spacing;
+                    rec.y = y * (space_dim + spacing) + spacing;
+                    set.add_sprite(red_sprite_, {rec.x, rec.y}, 2);
+                }
             }
         }
-    } */
+    }
 }
 
 Dimensions View::initial_window_dimensions() const
@@ -90,7 +90,7 @@ Dimensions View::initial_window_dimensions() const
 std::string View::initial_window_title() const
 {
     // You can change this if you want:
-    return "Reversi";
+    return "Othello";
 }
 
 ge211::Position View::pos_to_grid(ge211::Position pos) const {
