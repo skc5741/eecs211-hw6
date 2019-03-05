@@ -21,7 +21,8 @@ void Controller::on_mouse_down(ge211::Mouse_button, ge211::Position position)
 {
     // check if valid, perform swap
     ge211::Position grid_pos = view_.pos_to_grid(position);
-    if(model_[grid_pos] == Player::neither) {}
+    if(model_[grid_pos] == Player::neither && model_.find_move(grid_pos)
+        != nullptr && !model_.is_game_over())
         model_.play_move(grid_pos);
 }
 

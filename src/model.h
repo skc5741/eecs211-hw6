@@ -136,7 +136,7 @@ private:
     // Otherwise, it returns the empty set.
     //
     // (Helper for `evaluate_position_`.)
-    Position_set find_flips_(ge211::Position start,
+    Position_set find_flips_(ge211::Position temp,
                              ge211::Dimensions dir) const;
 
     // Returns the set of positions that the current player would gain

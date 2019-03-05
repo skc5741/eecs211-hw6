@@ -6,8 +6,10 @@ using namespace ge211;
 struct Test_access {
     Model &m_;
     Board &board() {return m_.board_;}
-    Position_set find_flips(Position start, Dimensions dir) {return m_.find_flips_(start, dir);}
-    Position_set evaluate_position(Position pos) {return m_.evaluate_position_(pos);}
+    Position_set find_flips(Position start, Dimensions dir)
+        {return m_.find_flips_(start, dir);}
+    Position_set evaluate_position(Position pos)
+        {return m_.evaluate_position_(pos);}
     Move_map next_moves() {return m_.next_moves_;}
     void compute_next_moves() {m_.compute_next_moves_();}
     bool advance_turn() {return m_.advance_turn_();}
@@ -83,7 +85,8 @@ TEST_CASE("Test constructor") {
     CHECK(m1.turn() == Player::dark);
 }
 
-TEST_CASE("Test starting four placement: also testing compute_next_moves, play_move") {
+TEST_CASE("Test starting four placement: also testing compute_next_moves,"
+          "play_move") {
     Model m1(8);
     Test_access t1{m1};
 

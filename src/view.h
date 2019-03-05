@@ -33,10 +33,10 @@ public:
 private:
     Model const& model_;
 
-    int space_dim = 32;
-    int piece_rad = 12;
-    int marker_rad = 6;
-    int spacing = 3;
+    int space_dim = 50;
+    int piece_rad = 21;
+    int marker_rad = 8;
+    int spacing = 5;
 
     // TODO: Add any private members you need, such as sprites
     ge211::Rectangle_sprite    const    // Dimensions, color

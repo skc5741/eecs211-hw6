@@ -44,7 +44,8 @@ void Model::play_move(Position pos)
 
     // TODO: actually execute the move, advance the turn, refill
     // `next_moves_`, etc.
-    really_play_move_(*movep);
+    else
+        really_play_move_(*movep);
 }
 
 //
@@ -54,18 +55,18 @@ void Model::play_move(Position pos)
 Position_set Model::find_flips_(Position current, Dimensions dir) const
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
-    Position begin = current;
+    Position temp = current;
     Position_set flips;
-    current = current + dir;
+    temp = temp + dir;
     for(;;) {
-        if(!board_.good_position(current) || board_[current] == Player::neither) {
+        if(!board_.good_position(temp) || board_[temp] == Player::neither) {
             return {};
         }
-        else if(board_[current] == other_player(turn_)) {
-            flips[current] = true;
-            current = current + dir;
+        else if(board_[temp] == other_player(turn_)) {
+            flips[temp] = true;
+            temp = temp + dir;
         }
-        else if(board_[current] == turn_) {
+        else if(board_[temp] == turn_) {
             return flips;
         }
         else
@@ -89,7 +90,10 @@ void Model::compute_next_moves_()
     next_moves_.clear();
     Rectangle avail_positions;
     if (turn_count < 4) {
-        avail_positions = Rectangle::from_top_left({board_.dimensions().width/2-1, board_.dimensions().height/2-1}, {2, 2});
+        avail_positions =
+                Rectangle::from_top_left({board_.dimensions().width/2-1,
+                                          board_.dimensions().height/2-1},
+                                                  {2, 2});
         for(Position pos : avail_positions) {
             Position_set pset;
             pset[pos] = true;
@@ -124,9 +128,10 @@ void Model::set_game_over_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
     turn_ = Player::neither;
-    if(board_.count_player(Player::dark) > board_.count_player(Player::light) )
+    if(board_.count_player(Player::dark) > board_.count_player(Player::light))
         winner_ = Player::dark;
-    else if(board_.count_player(Player::dark) < board_.count_player(Player::light))
+    else if(board_.count_player(Player::dark)
+            < board_.count_player(Player::light))
         winner_ = Player::light;
     else
         winner_ = Player::neither;
@@ -140,4 +145,3 @@ void Model::really_play_move_(Move move)
     if(!advance_turn_())
         set_game_over_();
 }
-
