@@ -80,8 +80,10 @@ void View::draw(Sprite_set& set, ge211::Position mouse_pos)
 Dimensions View::initial_window_dimensions() const
 {
     // You can change this if you want:
-    return { model_.board().dimensions().width * (space_dim + spacing) + spacing,
-             model_.board().dimensions().height * (space_dim + spacing) + spacing };
+    return { model_.board().dimensions().width
+                * (space_dim + spacing) + spacing,
+             model_.board().dimensions().height
+                * (space_dim + spacing) + spacing };
 }
 
 std::string View::initial_window_title() const

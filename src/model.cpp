@@ -128,7 +128,8 @@ void Model::set_game_over_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
     turn_ = Player::neither;
-    if(board_.count_player(Player::dark) > board_.count_player(Player::light))
+    if(board_.count_player(Player::dark)
+        > board_.count_player(Player::light))
         winner_ = Player::dark;
     else if(board_.count_player(Player::dark)
             < board_.count_player(Player::light))

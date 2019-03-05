@@ -52,7 +52,10 @@ private:
     ge211::Circle_sprite    const       // Radius, color
             marker_sprite_    { marker_rad,  red_color};
     ge211::Rectangle_sprite  const      // Dimensions, color
-            background_sprite {{ model_.board().dimensions().width * (space_dim + spacing) + spacing,
-                                 model_.board().dimensions().height * (space_dim + spacing) + spacing }, gray_color};
+            background_sprite {{ model_.board().dimensions().width
+                                    * (space_dim + spacing) + spacing,
+                                 model_.board().dimensions().height
+                                    * (space_dim + spacing) + spacing },
+                               gray_color};
 };
 
