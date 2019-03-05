@@ -29,6 +29,7 @@ try {
     // You can change how you start your game class if you want (but
     // you probably don't need to):
     Controller(width, height).run();
+    //Controller(5, 4).run();
 }
 
 // This prints out error messages if, say, the command-line argument
