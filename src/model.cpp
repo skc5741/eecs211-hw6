@@ -89,11 +89,20 @@ void Model::compute_next_moves_()
     // TODO OR NOT TODO: OPTIONAL HELPER
     next_moves_.clear();
     Rectangle avail_positions;
-    if (turn_count < 4) {
-        avail_positions =
-                Rectangle::from_top_left({board_.dimensions().width/2-1,
-                                          board_.dimensions().height/2-1},
-                                                  {2, 2});
+
+    int mid_x = board_.dimensions().width/2-1;
+    int mid_y = board_.dimensions().height/2-1;
+
+    if (board_[{mid_x, mid_y}] == Player::neither ||
+        board_[{mid_x+1, mid_y}] == Player::neither ||
+        board_[{mid_x, mid_y+1}] == Player::neither ||
+        board_[{mid_x+1, mid_y+1}] == Player::neither) {
+
+        avail_positions = Rectangle::from_top_left
+                ({board_.dimensions().width/2-1,
+                  board_.dimensions().height/2-1},
+                 {2, 2});;
+
         for(Position pos : avail_positions) {
             Position_set pset;
             pset[pos] = true;
@@ -119,7 +128,6 @@ bool Model::advance_turn_()
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
     turn_ = other_player(turn_);
-    turn_count++;
     compute_next_moves_();
     return !next_moves_.empty();
 }

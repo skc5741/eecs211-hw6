@@ -238,3 +238,23 @@ TEST_CASE("Test really_play_move") {
     CHECK(t1.board()[{3,4}] == Player::light);
     CHECK(m1.turn() == Player::dark);
 }
+
+TEST_CASE("next_moves failing?") {
+    Model m1(4);
+    Test_access t1{m1};
+
+    CHECK(t1.next_moves().size() == 4);
+    t1.play_move({2,1});
+    CHECK(t1.next_moves().size() == 3);
+    t1.play_move({1,1});
+    CHECK(t1.next_moves().size() == 2);
+    t1.play_move({2,2});
+    CHECK(t1.next_moves().size() == 1);
+    t1.play_move({1,2});
+    CHECK(t1.next_moves().size() == 4);
+
+    CHECK(t1.next_moves()[{0,0}][{1,1}] == true);
+    CHECK(t1.next_moves()[{0,1}][{1,1}] == true);
+    CHECK(t1.next_moves()[{0,2}][{1,2}] == true);
+    CHECK(t1.next_moves()[{0,3}][{1,2}] == true);
+}

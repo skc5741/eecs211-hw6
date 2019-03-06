@@ -99,7 +99,6 @@ private:
     Player turn_   = Player::dark;
     Player winner_ = Player::neither;
     Board board_;
-    int turn_count = 0;
 
     Move_map next_moves_;
     // INVARIANT:
