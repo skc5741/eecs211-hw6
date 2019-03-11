@@ -81,6 +81,9 @@ Position_set Model::evaluate_position_(Position pos) const
     for(Dimensions dir : Board::all_directions()) {
         flips |= find_flips_(pos, dir);
     }
+    if(!flips.empty()) {
+        flips[pos] = true;
+    }
     return flips;
 }
 
@@ -149,7 +152,6 @@ void Model::set_game_over_()
 void Model::really_play_move_(Move move)
 {
     // TODO OR NOT TODO: OPTIONAL HELPER
-    board_[move.first] = turn_;
     board_[move.second] = turn_;
     if(!advance_turn_())
         set_game_over_();
